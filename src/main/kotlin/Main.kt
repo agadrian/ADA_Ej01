@@ -28,6 +28,7 @@ fun createDict(fichero: Path): Map<String, MutableList<String>>{
         val datos = lineas.drop(1) // No coger la cabecera
         //println(datos)
 
+
         // Meter cada titulo de columna en el diccionario
         for (titulo in cabecera){
             dicc[titulo] = mutableListOf()
@@ -62,7 +63,8 @@ fun createFile(dict: Map<String,MutableList<String>>, rutaFile: Path){
 
     for ((columna,valores) in dict){
         // Lista de valores no nulos, para obtener solo las lineas con numeros y no letras, ya que las lineas de strings devuelven null
-        val numeros = valores.mapNotNull { it.replace(",",".").toDoubleOrNull() }
+        // Cambiamos "," por "." para los decimales
+        val numeros = valores.mapNotNull { it.replace(".", "").replace(",",".").toDoubleOrNull() }
 
         if (numeros.isNotEmpty()){
             // Si no esta vacia la lista de numeros, calculamos
